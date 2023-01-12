@@ -17,7 +17,6 @@ from discord import Intents, app_commands
 from discord.ext import commands
 from discord.ext.commands import when_mentioned_or, Context
 
-
 config = configparser.RawConfigParser()
 config.read("secrets/config.ini")
 intent = Intents.default()
@@ -26,7 +25,7 @@ test_guild = discord.Object(config["bot"]["test_guild"]) if "test_guilds" in con
 bot = commands.Bot(command_prefix=when_mentioned_or("::"), intents=intent)
 
 funny_msgs = ["どうぞ", "ウイ", "{0}たんのために、特別に早くしました!💫", "はい！🫡"]
-call_for_donations = """> furi-sama is a very resource-intensive service. To help pay for our servers, please consider [buying me a coffee](https://ko-fi.com/realmayus)"""
+
 
 class FuriSama(commands.Cog):
     def __init__(self, _bot):
@@ -76,9 +75,13 @@ class FuriSama(commands.Cog):
         duration = humanize.precisedelta(datetime.timedelta(seconds=start2 - start), minimum_unit="microseconds")
         duration2 = humanize.precisedelta(datetime.timedelta(seconds=time.time() - start2), minimum_unit="microseconds")
         print(f"Took {duration} (lexing) and {duration2} (rendering)")
-        await interaction.response.send_message(
-            call_for_donations + funny_msgs[random.randrange(0, len(funny_msgs))].format(interaction.user.display_name),
-            file=discord.File(BytesIO(img), filename="furigana.png"), ephemeral=True)
+        ebd = discord.Embed(
+            title=funny_msgs[random.randrange(0, len(funny_msgs))].format(interaction.user.display_name),
+            description="furi-sama is a very resource-intensive service. To help pay for our servers, please consider buying me coffee(s)!",
+            url="https://ko-fi.com/realmayus")
+        await interaction.response.send_message(embed=ebd,
+                                                file=discord.File(BytesIO(img), filename="furigana.png"),
+                                                ephemeral=True)
 
     async def on_add_furigana_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
         if isinstance(error, app_commands.CommandOnCooldown):
