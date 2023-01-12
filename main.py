@@ -19,7 +19,7 @@ from discord.ext.commands import when_mentioned_or, Context
 
 
 config = configparser.RawConfigParser()
-config.read("secrsts/config.ini")
+config.read("secrets/config.ini")
 intent = Intents.default()
 admins = [int(u) for u in config["bot"]["admins"].split(",")]
 test_guild = discord.Object(config["bot"]["test_guild"]) if "test_guilds" in config["bot"].keys() else None
