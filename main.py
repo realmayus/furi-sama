@@ -77,12 +77,9 @@ class FuriSama(commands.Cog):
         print(f"Took {duration} (lexing) and {duration2} (rendering)")
         ebd = discord.Embed(
             title=funny_msgs[random.randrange(0, len(funny_msgs))].format(interaction.user.display_name),
-            description="furi-sama is a very resource-intensive service. To help pay for our servers, please consider buying me coffee(s)!",
             url="https://ko-fi.com/realmayus")
-        ebd.set_footer(text="oiuaze")
-        ebd.set_author(name="name", url="https://google.com")
+        ebd.set_footer(text="furi-sama is a very resource-intensive service. To help pay for our servers, please consider [buying me coffee(s)!](https://ko-fi.com/realmayus)")
         ebd.set_image(url="attachment://furigana.png")
-        ebd.set_thumbnail(url="attachment://furigana.png")
         await interaction.response.send_message(embed=ebd,
                                                 file=discord.File(BytesIO(img), filename="furigana.png"),
                                                 ephemeral=True)
