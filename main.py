@@ -25,7 +25,7 @@ test_guild = discord.Object(config["bot"]["test_guild"]) if "test_guilds" in con
 bot = commands.Bot(command_prefix=when_mentioned_or("::"), intents=intent)
 
 funny_msgs = ["どうぞ", "ウイ", "{0}たんのために、特別に早くしました!💫", "はい！🫡"]
-
+emojis = ["🍜", "🥟", "🎏", "🍘", "🍙", "🍱", "🥢", "🎍", "🎋", "🍡", "🍥", "🍣"]
 
 class FuriSama(commands.Cog):
     def __init__(self, _bot):
@@ -78,7 +78,8 @@ class FuriSama(commands.Cog):
         ebd = discord.Embed(
             title=funny_msgs[random.randrange(0, len(funny_msgs))].format(interaction.user.display_name),
             url="https://ko-fi.com/realmayus")
-        ebd.set_footer(text="furi-sama is a very resource-intensive service. To help pay for our servers, please consider [buying me coffee(s)!](https://ko-fi.com/realmayus)")
+        ebd.set_author(name=emojis[random.randrange(0, len(emojis))] + " Help cover server costs <3", url="https://ko-fi.com/realmayus", icon_url="https://cdn.discordapp.com/avatars/1057677827421515826/3c92d26291a1429264eda66901be6d93.png")
+        ebd.set_footer(text="furi-sama is a very resource-intensive service. To help pay for the servers, please consider donating!")
         ebd.set_image(url="attachment://furigana.png")
         await interaction.response.send_message(embed=ebd,
                                                 file=discord.File(BytesIO(img), filename="furigana.png"),
