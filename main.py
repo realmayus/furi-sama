@@ -19,14 +19,14 @@ from discord.ext.commands import when_mentioned_or, Context
 
 
 config = configparser.RawConfigParser()
-config.read("config.ini")
+config.read("secrsts/config.ini")
 intent = Intents.default()
 admins = [int(u) for u in config["bot"]["admins"].split(",")]
 test_guild = discord.Object(config["bot"]["test_guild"]) if "test_guilds" in config["bot"].keys() else None
 bot = commands.Bot(command_prefix=when_mentioned_or("::"), intents=intent)
 
 funny_msgs = ["どうぞ", "ウイ", "{0}たんのために、特別に早くしました!💫", "はい！🫡"]
-
+call_for_donations = """> furi-sama is a very resource-intensive service. To help pay for our servers, please consider [buying me a coffee](https://ko-fi.com/realmayus)"""
 
 class FuriSama(commands.Cog):
     def __init__(self, _bot):
@@ -77,7 +77,7 @@ class FuriSama(commands.Cog):
         duration2 = humanize.precisedelta(datetime.timedelta(seconds=time.time() - start2), minimum_unit="microseconds")
         print(f"Took {duration} (lexing) and {duration2} (rendering)")
         await interaction.response.send_message(
-            funny_msgs[random.randrange(0, len(funny_msgs))].format(interaction.user.display_name),
+            call_for_donations + funny_msgs[random.randrange(0, len(funny_msgs))].format(interaction.user.display_name),
             file=discord.File(BytesIO(img), filename="furigana.png"), ephemeral=True)
 
     async def on_add_furigana_error(self, interaction: discord.Interaction, error: app_commands.AppCommandError):
